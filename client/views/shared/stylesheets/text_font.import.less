@@ -1,0 +1,165 @@
+// In the long term, possibly remove the size and weight combinations,
+// since they don't reduce code that much
+
+@base-font: 13px;
+@text-size-xs: .6em;
+@text-size-sm: .8em;
+@text-size-default: 1.0em;
+@text-size-md: 1.2em;
+@text-size-lg: 1.4em;
+@text-size-xl: 1.6em;
+@text-size-xxl: 2.5em;
+@text-size-xxxl: 3.0em;
+
+@text-weight-normal: 400; // normal
+@text-weight-md: 500;
+@text-weight-dk: 700; // bold
+@text-weight-xdk: 800;
+@text-weight-xxdk: 900;
+
+/** elements overrides **/
+body {
+    font-size: @base-font;
+}
+
+h1 {
+    //page title
+}
+h2 {                    //column title
+    font-size: 1.6em;
+}
+h3 {                    //section title
+    font-size: 1.4em;
+    font-weight: bold;
+}
+h4 {
+    padding:  5px 0px 0px 0px;
+    color: #999999;
+}
+
+.text-size-normal {
+    font-size: @text-size-default;
+}
+.text-xs {
+    font-size: @text-size-xs;
+}
+.text-sm {
+    font-size: @text-size-sm;
+}
+.text-lg {
+    font-size: @text-size-lg;
+}
+.text-xl {
+    font-size: @text-size-xl;
+}
+.text-xxl {
+    font-size: @text-size-xxl;
+}
+
+.text-md {
+    font-weight: @text-weight-md;
+}
+.text-dk {
+    font-weight: @text-weight-dk;
+}
+.text-xdk {
+    font-weight: @text-weight-xdk;
+}
+.text-xxdk {
+    font-weight: @text-weight-xxdk;
+}
+.text-lg-dk {
+    .text-lg;
+    .text-dk;
+}
+.text-md-md {
+    font-size: @text-size-md;
+    font-weight: @text-weight-md;
+}
+.text-lg-md {
+    font-size: @text-size-lg;
+    font-weight: @text-weight-md;
+}
+.text-xl-xdk {
+    font-size: @text-size-xl;
+    font-weight: @text-weight-xdk
+}
+.text-xl-xxdk {
+    font-size: @text-size-xl;
+    font-weight: @text-weight-xxdk;
+}
+
+/** text and font section**/
+.title-page, .title-commentary, .title-commentary-transparent {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 50px;
+    font-size: @text-size-xxl;
+    font-weight: bold;
+}
+.title-commentary, .title-commentary-transparent {
+    display: block;
+    margin-bottom: 30px;
+}
+.content-commentary {
+    .text-lg-md;
+}
+.title-link {
+    font-size: .7em;
+    font-style: italic;
+    position: relative;
+    top: 5px;
+}
+.list-item-attached-link {
+    font-style: italic;
+}
+.title-col {
+    font-size: @text-size-lg;
+    font-weight: bold;
+    margin-bottom: 10px;
+    vertical-align: bottom;
+    a {
+        .title-link;
+    }
+}
+.title-section {
+    font-size: @text-size-lg;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.title-modal {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 50px;
+    font-size: @text-size-xxl;
+    font-weight: bold;
+}
+.title-table-heading {
+    font-size: @text-size-lg;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: @shade-xxxdk;
+}
+.loading {
+    padding: 40px 40px 40px 40px;
+    font-size: @text-size-xl;
+}
+.label-lg-dk {
+    .text-lg-dk;
+}
+.label-xl-xdk {
+    .text-xl-xdk;
+}
+.divider-text {
+    position: absolute;
+    left: 0;
+    top: -15px;
+    padding-left: @col-gutter-width;
+    padding-right: 5px;
+    background-color: white;
+    font-size: @text-size-lg;
+    font-weight: bold;
+    z-index: 10;
+}
+

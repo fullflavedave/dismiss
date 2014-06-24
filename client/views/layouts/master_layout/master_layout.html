@@ -1,0 +1,33 @@
+<template name="MasterLayout">
+    <div class="row">
+        {{> PageHeader}}
+    </div>
+
+    <div class="row">
+        {{> PageNav}}
+    </div>
+
+    <!-- Begin for anonymous use -->
+    <div class="row">
+        <div class="main-content-wrapper">
+            {{> yield}}
+        </div>
+    </div>
+    <!-- End for anonymous user -->
+
+    <!-- Begin for logged in user -->
+    {{#if currentUser}}
+
+    <div class="row">
+        <div class="main-content-wrapper">
+        {{> yield}}
+        </div>
+    </div>
+
+    {{/if}}
+    <!-- End for logged in user -->
+
+    <div id="footer-bar">
+        {{> PageFooter}}
+    </div>
+</template>

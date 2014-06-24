@@ -1,0 +1,532 @@
+/*****************************************************************************/
+/* Universal CSS Styles, across applications                                 */
+/*****************************************************************************/
+
+//Alter theses at the app template level
+@import "../../../../packages/bootstrap3-less/bootstrap.import.less";
+@import "elements.import.less";
+@import "grid_additions.import.less";
+@import "text_font.import.less";
+@import "../../../app.import.less";
+
+//Can alter these on the app level
+@import "../../layouts/master_layout/master_layout.import.less";
+@import "../../layouts/two_col_layout/two_col_layout.import.less";
+@import "../page_header/page_header.import.less";
+@import "../page_nav/page_nav.import.less";
+@import "../page_footer/page_footer.import.less";
+
+/********** Grid sizes **********/
+// These are Bootstrap defaults
+// xs: 480px
+// sm: 768px
+// md: 992px
+// lg: 1200px
+//
+// Dave added/set these
+// xl: 1500px
+// xxl: 2000px
+
+
+/********** Conventions **********/
+// layout: page, then col, then section, then block, then group (labels and elements, etc)
+// size:  *-xxs, *-xs, *-sm, *-md, *-lg, *-xl, *-xxl
+// color:  *-xxlt, *-xlt, *-lt, *-md, *-dk, *-xdk, *-xxdk
+//
+// Colors are the last part of an identifier, size is usually second-to-last:  e.g. @border-md-xxdk
+//
+// In html, start with base class, add on 2 or 3 other classes afterward to vary
+// (rather than a class for every variation).  I think classes should not have overlapping
+// properties since there doesn't seem to be a way to specify which classes' property should be used
+
+
+/********** Layout paradigm **********/
+// page
+//    header/main-nav (well/field, main nav, login)
+//    title-bar
+//    row
+//         col (e.g. col-md-5)
+//             title-col
+//             section-first
+//                 title-section
+//                 group (e.g. form-group)
+//             section
+//                 title-section
+//                 group (e.g. form-group)
+
+/** Reusable variables/settings **/
+@shade-bs-active: #e7e7e7;
+@shade-xxlt: #fcfcfc;
+@shade-xlt: #f5f5f5;
+@shade-lt: #eee;
+@shade-md: #ddd;
+@shade-dk: #ccc;
+@shade-xdk: #aaa;
+@shade-xxdk: #888;
+@shade-xxxdk: #666;
+@shade-xxxxdk: #333;
+
+@custom-colors: #FCF5DE;
+
+@shade-up-gradient-lt: linear-gradient(@shade-lt, #fff);
+@shade-up-gradient-md: linear-gradient(@shade-md, #fff);
+@shade-up-gradient-dk: linear-gradient(@shade-dk, #fff);
+@shade-up-gradient-xdk: linear-gradient(@shade-xdk, #fff);
+@shade-up-gradient-xxdk: linear-gradient(@shade-xxdk, @shade-lt);
+@shade-up-gradient-xxxdk: linear-gradient(@shade-xxxdk, @shade-md);
+@shade-up-gradient-xxxxdk: linear-gradient(@shade-xxxxdk, @shade-xdk);
+@shade-down-gradient-lt: linear-gradient(#fff, @shade-lt);
+@shade-down-gradient-md: linear-gradient(#fff, @shade-md);
+@shade-down-gradient-dk: linear-gradient(#fff, @shade-dk);
+@shade-down-gradient-xdk: linear-gradient(#fff, @shade-xdk);
+@shade-down-gradient-xxdk: linear-gradient(@shade-lt, @shade-xxdk);
+@shade-down-gradient-xxxdk: linear-gradient(@shade-md, @shade-xxxdk);
+@shade-down-gradient-xxxxdk: linear-gradient(@shade-xdk, @shade-xxxxdk);
+
+/** Borders **/
+@border-sm-xlt: solid 1px @shade-xlt;
+@border-sm-lt: solid 1px @shade-lt;
+@border-sm-md: solid 1px @shade-md;
+@border-sm-dk: solid 1px @shade-dk;
+@border-sm-xdk: solid 1px @shade-xdk;
+@border-sm-xxdk: solid 1px @shade-xxdk;
+@border-sm-xxxdk: solid 1px @shade-xxxdk;
+
+@border-md-xlt: solid 2px @shade-xlt;
+@border-md-lt: solid 2px @shade-lt;
+@border-md-md: solid 2px @shade-md;
+@border-md-dk: solid 2px @shade-dk;
+@border-md-xdk: solid 2px @shade-xdk;
+@border-md-xxdk: solid 2px @shade-xxdk;
+.border-md-xxdk {border: @border-md-xxdk;}
+@border-md-xxxdk: solid 2px @shade-xxxdk;
+
+@border-lg-xlt: solid 3px @shade-xlt;
+@border-lg-lt: solid 3px @shade-lt;
+@border-lg-md: solid 3px @shade-md;
+@border-lg-dk: solid 3px @shade-dk;
+@border-lg-xdk: solid 3px @shade-xdk;
+@border-lg-xxdk: solid 3px @shade-xxdk;
+@border-lg-xxxdk: solid 3px @shade-xxxdk;
+
+@border-xl-gradient: solid 10px @shade-down-gradient-xdk;
+
+@indent-size-default: 20px;
+@space-xxs: 3px;
+@space-xs: 5px;
+@space-sm: 10px;
+@space-md: 15px;
+@space-lg: 20px;
+@space-xl: 30px;
+@space-xxl: 40px;
+
+@title-separator: darkblue;
+@dark-text-color: #000000;
+@link-list-base-v-padding: 5px;
+
+
+/** Add-on classes, many made from mixins **/
+.rounded-corners-sm {
+    .border-radius(2px, 2px, 2px, 2px);
+}
+.rounded-corners-default {
+    .border-radius(4px, 4px, 4px, 4px);
+}
+.rounded-corners {
+    .border-radius(4px, 4px, 4px, 4px);
+}
+.rounded-corners-md {
+    .border-radius(8px, 8px, 8px, 8px);
+}
+.rounded-corners-lg {
+    .border-radius(12px, 12px, 12px, 12px);
+}
+.border-right-md-lt {
+    border-right: @border-lg-lt;
+}
+.border-left-md-lt {
+    border-left: @border-lg-lt;
+}
+.border-top-sm-xdk {
+    border-top: solid 1px @shade-xdk;
+}
+.border-bottom-sm-xxxxdk {
+    border-bottom: solid 1px @shade-xxxxdk;
+}
+.border-top-sm-xxxxdk {
+    border-top: solid 1px @shade-xxxxdk;
+}
+.border-bottom-md-dk {
+    border-bottom: @border-lg-dk;
+}
+.border-xdk {
+    border: @border-md-xdk;
+}
+.container-xdk {
+    border: @border-md-xdk;
+    padding: 20px 20px 20px 20px;
+}
+.padding-top-0 {
+    padding-top: 0px;
+}
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.ht-45 {
+    height: 45px;
+}
+
+//probably delete next 4 definitions
+.navigation-form-label {
+    .make-sm-column(5);
+    .make-md-column(5);
+    .make-lg-column(3);
+}
+.navigation-form-input {
+    .make-sm-column(7);
+    .make-md-column(7);
+    .make-lg-column(9);
+}
+.settings-form-label-xs {
+    .make-sm-column(2);
+    .make-md-column(2);
+    .make-lg-column(2);
+}
+//.settings-form-input-xs {
+//    .make-sm-column(2);
+//    .make-md-column(2);
+//    .make-lg-column(2);
+//}
+
+
+.indent-1 {
+    padding-left: @indent-size-default;
+}
+.indent-2 {
+    padding-left: (@indent-size-default * 2);
+}
+.indent-3 {
+    padding-left: (@indent-size-default * 3);
+}
+.indent-4 {
+    padding-left: (@indent-size-default * 4);
+}
+.indent-5 {
+    padding-left: (@indent-size-default * 5);
+}
+.col-well-1 {
+    .well;
+    .well-sm;
+    h3 {
+        margin-top: 0px;
+    }
+    .h1-area {
+        margin: 0px 0px 10px 0px;
+        border-bottom: @border-md-xdk;
+    }
+    .footer {
+        border-top: @border-sm-dk;
+        margin: 10px 0px 0px 0px;
+        padding: 10px 10px 0px 10px;
+        text-align: right;
+    }
+}
+.vbase{
+    display: table;
+    height: 100%;
+    div {
+        display: table-cell;
+    }
+}
+.vcenter {
+    .vbase;
+    div {
+        vertical-align: middle;
+    }
+}
+.vtop {
+    .vbase;
+    div {
+        vertical-align: top;
+    }
+}
+.vbottom {
+    .vbase;
+    div {
+        vertical-align: bottom;
+    }
+}
+.vtexttop {
+    .vbase;
+    div {
+        vertical-align: text-top;
+    }
+}
+.vtextbottom {
+    .vbase;
+    div {
+        vertical-align: text-bottom;
+    }
+}
+.vcenter-no-float {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.pull-center {
+    text-align: center;
+}
+.center-lg-spaced {
+    text-align: center;
+    margin: 30px 30px 30px 30px;
+}
+.disabled-link {
+    pointer-events: none;
+    cursor: default;
+    color: @shade-xdk;
+}
+.collapsing-link {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.collapsing-section {
+    margin-top: 20px;
+}
+.min-width-lg {
+    min-width: 1550px;
+    display: inline-block;
+}
+
+/** Overrides of Bootstrap defaults **/
+//.nav li a {
+//    padding-top: @link-list-base-v-padding;
+//    padding-bottom: @link-list-base-v-padding;
+//}
+.tight-list li a {
+    padding: 0px 0px 0px 0px;
+}
+
+/** lists **/
+ul.list-recursive {
+    list-style: none;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    li {
+        margin-bottom: 30px;
+        .list-h1 {
+            padding-top: 7px;
+            padding-bottom: 7px;
+            padding-left: 10px;
+            padding-right: 30px;
+            border-top: @border-sm-dk;
+            border-bottom: @border-sm-dk;
+            background: @shade-xlt;
+            .text-lg-dk;
+            a {
+                font-weight: normal;
+            }
+        }
+        ul {
+            list-style: none;
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            li {
+                margin-bottom: 0px;
+                border-bottom: @border-sm-xdk;
+                background-color: none;
+                .list-h2 {
+                    padding-left: 10px;
+                    padding-right: 30px;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    .linked-name {
+                        color: black;
+                    }
+                }
+            }
+            .active {
+                border-bottom: @border-sm-xxxdk;
+                background-color: #FFFFCE;
+                //                background-color: #F2F06C;
+                .list-h2 {
+                    .linked-name {
+                        .text-dk;
+                    }
+                }
+            }
+        }
+    }
+    .active {
+        .list-h1 {
+            border-top: @border-sm-xdk;
+            border-bottom: @border-sm-xdk;
+            background: @shade-bs-active;
+        }
+    }
+}
+
+
+
+// retire these?
+.ul-vertical-list {
+    list-style: none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+.project-list-name {
+    font-size: @base-font * 1.5;
+    margin: 0px 0px 0px 0px;
+}
+.project-list-action-buttons {
+
+}
+.panel-body.well-list {
+    margin: 10px 15px 10px 30px;
+}
+
+
+/** General styles **/
+.scrollbox {
+    //    border: 2px solid #ccc;
+    //    padding: 5px 10px 5px 20px;
+    width: 300px;
+    height: 200px;
+    overflow-y: scroll;
+}
+.heavy-container {
+    border: @border-md-xdk;
+    .rounded-corners-lg;
+    padding:  40px 40px 40px 40px;
+    text-align: center;
+}
+.no-column-content {
+    margin: 60px 60px 60px 60px;
+}
+#project-bar {
+    border-bottom: @border-sm-md;
+}
+#variable-display {
+    .well;
+    margin: 20px 0px 20px 0px;
+}
+#graphics-display {
+    margin: 20px 0px 10px 0px;
+    height: 100%;
+}
+#iframe-display {
+    .rounded-corners-md;
+    width: 100%;
+    height: 100%;
+}
+.col-menu {
+    padding: 10px 0px 15px 0px;
+    border-bottom: solid 2px #cccccc;
+}
+.col-bottom-menu {
+    border-top: solid 2px #cccccc;
+    padding: 15px 0px 0px 0px;
+    margin: 15px 0px 0px 0px;
+}
+ul.property-details-list {
+    .ul-vertical-list;
+    li {
+        margin-bottom: 10px;
+    }
+}
+.property-value {
+    font-weight: bold;
+}
+#project-title {
+    border-bottom: solid 2px #cccccc;
+    padding: 0px 0px 5px 0px;
+}
+li.spacer {
+    width: 80px;
+}
+
+.dropdown-menu {
+    padding: 2px 2px 2px 2px;
+    width: 10px;
+}
+
+.dropdown-menu li {
+    font-size: 12px;
+}
+
+.project-overview-col {
+    width: 850px;
+}
+
+.project-element-container {
+    width: 100%;
+    height: 300px;
+    border: solid 1px #dddddd;
+    margin: 20px 0px 0px 0px;
+}
+
+.panel-custom-guide-box {
+    height: 300px;
+    background-color: #eeeeee;
+    float: left;
+    width: 20%;
+    margin: 0px 20px 0px 0px;
+    padding: 30px 20px 20px 20px;
+    text-align: center;
+}
+
+.panel-custom-guide-box-text {
+    margin-top: 30px;
+}
+
+.panel-custom-content {
+    padding: 15px 15px 15px 15px;
+    width: 77%;
+    float: right;
+}
+
+.panel-body {
+    padding: 0px 0px 0px 0px;
+}
+
+.panel-body h4 {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+.level-1-panel ul {
+    list-style: none;
+}
+.level-2-panel {
+    margin: 5px 15px 5px 100px;
+}
+.general-form {
+    margin: 20px 0px 20px 0px;
+}
+.h-area-1 {
+    text-align: center;
+    margin: 10px 10px 10px 10px;
+    .guide {
+        font-size: @base-font * 2;
+        text-align: left;
+        margin: 0px 20px 0px 0px;
+    }
+    button {
+        margin: auto auto 10px auto;
+    }
+}
+.status {
+    padding: 5px 5px 5px 5px;
+}
+.status-success {
+    .alert-success;
+    .status;
+}
+.status-warning {
+    .alert-warning;
+    .status;
+}
+.no-pad {
+    padding: 0 0 0 0;
+}

@@ -1,0 +1,33 @@
+<template name="TwoColLayout">
+    <div class="row">
+        {{> PageHeader}}
+    </div>
+
+    <div class="row">
+        {{! MainNav}}
+    </div>
+
+    {{! Only including this since console complains without it, and since redirected login unexpectedly calls this template }}
+    <div class="row">
+        {{> yield}}
+    </div>
+
+    {{! for redirected login}}
+    {{#if currentUser}}
+
+    <div class="row">
+        <div id="left-col">
+            {{! yield region="leftCol"}}
+        </div>
+        <div id="right-col">
+            {{! yield region="rightCol"}}
+        </div>
+    </div>
+
+
+    {{/if}}
+
+    <div id="footer-bar">
+        {{> PageFooter}}
+    </div>
+</template>

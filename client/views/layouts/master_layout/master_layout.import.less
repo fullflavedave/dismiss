@@ -1,0 +1,145 @@
+/*****************************************************************************/
+/* MasterLayout: Style */
+/*****************************************************************************/
+
+.main-content-wrapper {
+    height: 600px;
+    padding: 10px @col-gutter-width 10px @col-gutter-width;
+}
+
+/** Layout variables and elements **/
+//@winheightnum: `$(window).height()`;
+//@winheight: ~"@{winheight}px";
+@page-header-height: 55px;
+@title-bar-height: 80px;
+@page-footer-height: 110px;
+@grid-gutter-width: 50px;  //override of Bootstrap setting
+@col-gutter-width: @grid-gutter-width/2;
+@col-sm-padding: @col-gutter-width - 5;
+@left-col-width: 350px;
+@height-col: 1000px;
+//@width-display-content-area: 1240px;
+
+.row {
+    margin: 0 0 0 0;
+}
+
+#title-bar {
+    margin-left: @col-gutter-width;
+    margin-bottom: 10px;
+    height: @title-bar-height;
+    #left-title-col {
+        float: left;
+        width: @left-col-width;
+        padding-left: @col-gutter-width;
+        padding-right: @col-gutter-width;
+    }
+    #right-title-col {
+        margin-left: @left-col-width;
+        padding-right: @col-gutter-width;
+    }
+}
+.next-action-section {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: @left-col-width;
+    padding-top: 7px;
+    //    padding-left: @space-lg;
+    background-color: @shade-dk;
+}
+.col-base {
+    //    height: 100%;
+    //    min-height: 100%;
+    height: @height-col;
+    //    padding-left: 0px;
+    //    padding-left: @col-gutter-width;
+    //    padding-right: @col-gutter-width;
+}
+#left-col {
+    .col-base;
+    position: relative;
+    float: left;
+    width: @left-col-width;
+    border-right: @border-lg-lt;
+}
+#middle-col {
+    .col-base;
+    border-right: solid 3px #eeeeee;
+}
+#right-col {
+    .col-base;
+    margin-left: @left-col-width;
+}
+.col-content {
+    padding-left: @col-gutter-width;
+    padding-right: @col-gutter-width;
+}
+#header-col {
+    position: relative;
+    top: 15px;
+    height: 30px;
+}
+.col-sm-padding {
+    padding-left: @col-sm-padding;
+    padding-right: @col-sm-padding;
+}
+#loading {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 101;
+    top: 50%;
+    opacity: .5;
+}
+#initial-cover {
+    position: absolute;
+    height: 101%;
+    width: 100%;
+    background-color: white;
+    z-index: 100;
+}
+.viewport-base {
+    position: relative;
+    //    height: @height-col; //keeping this for now since the map only fills this size
+    //    overflow-y: scroll;
+}
+#viewport-graphics {
+    //    width: 1500px;
+    .viewport-base;
+    position: relative;
+    //    background-color: @shade-xlt;
+    #field-map-canvas {
+        //        height: 100%;
+        //        width: @width-display-content-area;
+    }
+    //    .paraview-viewport {
+    //        margin: 0;
+    //        position: absolute;
+    //        top: 50px;
+    //        left: 20px;
+    //        right: 20px;
+    //        bottom: 0;
+    //        z-index: 10;
+    //    }
+    #display-area {
+        //        display: inline-block;
+    }
+
+}
+.section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.section-first {
+    .section;
+    margin-top: 0px;
+}
+.section-sm {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.section-sm-first {
+    .section-sm;
+    margin-top: 0px;
+}

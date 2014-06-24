@@ -1,0 +1,231 @@
+/********************* Grid XL Settings ************************/
+// Copied from https://github.com/anim/bootstrap-grid-xl/blob/master/_grid.scss
+//
+// Grid system for Bootstrap Grid XL
+// --------------------------------------------------
+
+@screen-xl-desktop: 1500px;
+
+// Styles for extra large grid columns
+.col-xl-1,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12 {
+    position: relative;
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+    // Inner gutter via padding
+    padding-left:  (@grid-gutter-width / 2);
+    padding-right: (@grid-gutter-width / 2);
+}
+
+// Extend large grid to float `.col-lg-12`, since it is no longer full-width
+@media (min-width: @screen-lg-desktop) {
+    .col-lg-12 {
+        float: left;
+    }
+}
+
+// Extra large grid
+//
+// Columns, offsets, pushes, and pulls for the extra large desktop device range.
+//
+// Note that `.col-xl-12` doesn't get floated on purpose—there's no need since
+// it's full-width.
+
+@media (min-width: @screen-xl-desktop) {
+    .container {
+        max-width: @screen-xl-desktop;
+    }
+
+    .col-xl-1,
+    .col-xl-2,
+    .col-xl-3,
+    .col-xl-4,
+    .col-xl-5,
+    .col-xl-6,
+    .col-xl-7,
+    .col-xl-8,
+    .col-xl-9,
+    .col-xl-10,
+    .col-xl-11 {
+        float: left;
+    }
+    .col-xl-1  { width: percentage((1 / @grid-columns)); }
+    .col-xl-2  { width: percentage((2 / @grid-columns)); }
+    .col-xl-3  { width: percentage((3 / @grid-columns)); }
+    .col-xl-4  { width: percentage((4 / @grid-columns)); }
+    .col-xl-5  { width: percentage((5 / @grid-columns)); }
+    .col-xl-6  { width: percentage((6 / @grid-columns)); }
+    .col-xl-7  { width: percentage((7 / @grid-columns)); }
+    .col-xl-8  { width: percentage((8 / @grid-columns)); }
+    .col-xl-9  { width: percentage((9 / @grid-columns)); }
+    .col-xl-10 { width: percentage((10/ @grid-columns)); }
+    .col-xl-11 { width: percentage((11/ @grid-columns)); }
+    .col-xl-12 { width: 100%; }
+
+    // Push and pull columns for source order changes
+    .col-xl-push-0  { left: auto; }
+    .col-xl-push-1  { left: percentage((1 / @grid-columns)); }
+    .col-xl-push-2  { left: percentage((2 / @grid-columns)); }
+    .col-xl-push-3  { left: percentage((3 / @grid-columns)); }
+    .col-xl-push-4  { left: percentage((4 / @grid-columns)); }
+    .col-xl-push-5  { left: percentage((5 / @grid-columns)); }
+    .col-xl-push-6  { left: percentage((6 / @grid-columns)); }
+    .col-xl-push-7  { left: percentage((7 / @grid-columns)); }
+    .col-xl-push-8  { left: percentage((8 / @grid-columns)); }
+    .col-xl-push-9  { left: percentage((9 / @grid-columns)); }
+    .col-xl-push-10 { left: percentage((10/ @grid-columns)); }
+    .col-xl-push-11 { left: percentage((11/ @grid-columns)); }
+
+    .col-xl-pull-0  { right: auto; }
+    .col-xl-pull-1  { right: percentage((1 / @grid-columns)); }
+    .col-xl-pull-2  { right: percentage((2 / @grid-columns)); }
+    .col-xl-pull-3  { right: percentage((3 / @grid-columns)); }
+    .col-xl-pull-4  { right: percentage((4 / @grid-columns)); }
+    .col-xl-pull-5  { right: percentage((5 / @grid-columns)); }
+    .col-xl-pull-6  { right: percentage((6 / @grid-columns)); }
+    .col-xl-pull-7  { right: percentage((7 / @grid-columns)); }
+    .col-xl-pull-8  { right: percentage((8 / @grid-columns)); }
+    .col-xl-pull-9  { right: percentage((9 / @grid-columns)); }
+    .col-xl-pull-10 { right: percentage((10/ @grid-columns)); }
+    .col-xl-pull-11 { right: percentage((11/ @grid-columns)); }
+
+    // Offsets
+    .col-xl-offset-0  { margin-left: 0; }
+    .col-xl-offset-1  { margin-left: percentage((1 / @grid-columns)); }
+    .col-xl-offset-2  { margin-left: percentage((2 / @grid-columns)); }
+    .col-xl-offset-3  { margin-left: percentage((3 / @grid-columns)); }
+    .col-xl-offset-4  { margin-left: percentage((4 / @grid-columns)); }
+    .col-xl-offset-5  { margin-left: percentage((5 / @grid-columns)); }
+    .col-xl-offset-6  { margin-left: percentage((6 / @grid-columns)); }
+    .col-xl-offset-7  { margin-left: percentage((7 / @grid-columns)); }
+    .col-xl-offset-8  { margin-left: percentage((8 / @grid-columns)); }
+    .col-xl-offset-9  { margin-left: percentage((9 / @grid-columns)); }
+    .col-xl-offset-10 { margin-left: percentage((10/ @grid-columns)); }
+    .col-xl-offset-11 { margin-left: percentage((11/ @grid-columns)); }
+}
+
+/********************* Grid XXL Settings ************************/
+// Copied from https://github.com/anim/bootstrap-grid-xl/blob/master/_grid.scss and altered a little
+//
+// Grid system for Bootstrap Grid XXL
+// --------------------------------------------------
+
+@screen-xxl-desktop: 2000px;
+
+// Styles for extra extra large grid columns
+.col-xxl-1,
+.col-xxl-2,
+.col-xxl-3,
+.col-xxl-4,
+.col-xxl-5,
+.col-xxl-6,
+.col-xxl-7,
+.col-xxl-8,
+.col-xxl-9,
+.col-xxl-10,
+.col-xxl-11,
+.col-xxl-12 {
+    position: relative;
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+    // Inner gutter via padding
+    padding-left:  (@grid-gutter-width / 2);
+    padding-right: (@grid-gutter-width / 2);
+}
+
+// Extend extra large grid to float `.col-lg-12`, since it is no longer full-width
+//@media (min-width: @screen-xxl-desktop) {
+//    .col-lg-12 {
+//        float: left;
+//    }
+//}
+
+// Extra large grid
+//
+// Columns, offsets, pushes, and pulls for the extra large desktop device range.
+//
+// Note that `.col-xxl-12` doesn't get floated on purpose—there's no need since
+// it's full-width.
+
+@media (min-width: @screen-xxl-desktop) {
+    .container {
+        max-width: @screen-xxl-desktop;
+    }
+
+    .col-xxl-1,
+    .col-xxl-2,
+    .col-xxl-3,
+    .col-xxl-4,
+    .col-xxl-5,
+    .col-xxl-6,
+    .col-xxl-7,
+    .col-xxl-8,
+    .col-xxl-9,
+    .col-xxl-10,
+    .col-xxl-11 {
+        float: left;
+    }
+    .col-xxl-1  { width: percentage((1 / @grid-columns)); }
+    .col-xxl-2  { width: percentage((2 / @grid-columns)); }
+    .col-xxl-3  { width: percentage((3 / @grid-columns)); }
+    .col-xxl-4  { width: percentage((4 / @grid-columns)); }
+    .col-xxl-5  { width: percentage((5 / @grid-columns)); }
+    .col-xxl-6  { width: percentage((6 / @grid-columns)); }
+    .col-xxl-7  { width: percentage((7 / @grid-columns)); }
+    .col-xxl-8  { width: percentage((8 / @grid-columns)); }
+    .col-xxl-9  { width: percentage((9 / @grid-columns)); }
+    .col-xxl-10 { width: percentage((10/ @grid-columns)); }
+    .col-xxl-11 { width: percentage((11/ @grid-columns)); }
+    .col-xxl-12 { width: 100%; }
+
+    // Push and pull columns for source order changes
+    .col-xxl-push-0  { left: auto; }
+    .col-xxl-push-1  { left: percentage((1 / @grid-columns)); }
+    .col-xxl-push-2  { left: percentage((2 / @grid-columns)); }
+    .col-xxl-push-3  { left: percentage((3 / @grid-columns)); }
+    .col-xxl-push-4  { left: percentage((4 / @grid-columns)); }
+    .col-xxl-push-5  { left: percentage((5 / @grid-columns)); }
+    .col-xxl-push-6  { left: percentage((6 / @grid-columns)); }
+    .col-xxl-push-7  { left: percentage((7 / @grid-columns)); }
+    .col-xxl-push-8  { left: percentage((8 / @grid-columns)); }
+    .col-xxl-push-9  { left: percentage((9 / @grid-columns)); }
+    .col-xxl-push-10 { left: percentage((10/ @grid-columns)); }
+    .col-xxl-push-11 { left: percentage((11/ @grid-columns)); }
+
+    .col-xxl-pull-0  { right: auto; }
+    .col-xxl-pull-1  { right: percentage((1 / @grid-columns)); }
+    .col-xxl-pull-2  { right: percentage((2 / @grid-columns)); }
+    .col-xxl-pull-3  { right: percentage((3 / @grid-columns)); }
+    .col-xxl-pull-4  { right: percentage((4 / @grid-columns)); }
+    .col-xxl-pull-5  { right: percentage((5 / @grid-columns)); }
+    .col-xxl-pull-6  { right: percentage((6 / @grid-columns)); }
+    .col-xxl-pull-7  { right: percentage((7 / @grid-columns)); }
+    .col-xxl-pull-8  { right: percentage((8 / @grid-columns)); }
+    .col-xxl-pull-9  { right: percentage((9 / @grid-columns)); }
+    .col-xxl-pull-10 { right: percentage((10/ @grid-columns)); }
+    .col-xxl-pull-11 { right: percentage((11/ @grid-columns)); }
+
+    // Offsets
+    .col-xxl-offset-0  { margin-left: 0; }
+    .col-xxl-offset-1  { margin-left: percentage((1 / @grid-columns)); }
+    .col-xxl-offset-2  { margin-left: percentage((2 / @grid-columns)); }
+    .col-xxl-offset-3  { margin-left: percentage((3 / @grid-columns)); }
+    .col-xxl-offset-4  { margin-left: percentage((4 / @grid-columns)); }
+    .col-xxl-offset-5  { margin-left: percentage((5 / @grid-columns)); }
+    .col-xxl-offset-6  { margin-left: percentage((6 / @grid-columns)); }
+    .col-xxl-offset-7  { margin-left: percentage((7 / @grid-columns)); }
+    .col-xxl-offset-8  { margin-left: percentage((8 / @grid-columns)); }
+    .col-xxl-offset-9  { margin-left: percentage((9 / @grid-columns)); }
+    .col-xxl-offset-10 { margin-left: percentage((10/ @grid-columns)); }
+    .col-xxl-offset-11 { margin-left: percentage((11/ @grid-columns)); }
+}
