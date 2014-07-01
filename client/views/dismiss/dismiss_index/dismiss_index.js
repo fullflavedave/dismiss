@@ -114,7 +114,8 @@ function displayHTML(pageId) {
             createFormButtonsHTML(pageId) +
             '</form>';
 
-    $('#wizard-text').html(htmlText);
+//    $('#wizard-text').html(htmlText);
+    document.getElementById('wizard-text').innerHTML = htmlText;
 }
 
 function createPageText(text) {
@@ -161,7 +162,7 @@ function createFormButtonsHTML(sectionId) {
     return htmlString;
 }
 
-function handleSubmit(e) {
+function handleWizardSubmit(e) {
     e.preventDefault();
     var result = '';
     var currentPage = history[history.length-1];
@@ -169,11 +170,22 @@ function handleSubmit(e) {
     var yesPage = pages[currentPage]['yesPage'];
     var noPage = pages[currentPage]['noPage'];
     for (var qId in questions) {
-        var answer = $('[name="' + qId + '-radios"]:checked').val();
-        answers.push({qId: answer});
-        if (truthy(answer)) {
-            result = true;
+        var radios = document.getElementsByName(qId + '-radios');
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+                answers.push({qId: radios[i].value});
+                if (truthy(radios[i].value)) {
+                    result = true;
+                }
+                // only one radio can be logically checked, don't check the rest
+                break;
+            }
         }
+//        var answer = $('[name="' + qId + '-radios"]:checked').val();
+//        answers.push({qId: answer});
+//        if (truthy(answer)) {
+//            result = true;
+//        }
     }
     if(result) {
         displayHTML(yesPage);
@@ -190,7 +202,7 @@ Template.DismissIndex.events({
    *  }
    */
     'click #wizard-submit': function(e, tmpl) {
-        handleSubmit(e);
+        handleWizardSubmit(e);
     },
 
     'click #linkTo5': function(e, tmpl) {
