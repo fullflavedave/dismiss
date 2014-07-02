@@ -26,13 +26,23 @@
       <file leaf-file-name="dismiss_index.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4903475" vertical-offset="1990" max-vertical-offset="3885">
-              <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.36293435" vertical-offset="1990" max-vertical-offset="4515">
+              <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1404228313000" expanded="true" signature="6215:6231" placeholder="..." />
-                <marker date="1404228313000" expanded="true" signature="6374:6393" placeholder="..." />
-                <marker date="1404228313000" expanded="true" signature="6499:6518" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="4721:4733" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="4789:4809" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="5365:5385" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="5658:5713" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="5838:5872" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="5903:5939" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="6110:6125" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="6435:6471" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="6553:6572" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="6673:6692" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="8034:8050" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="8197:8216" placeholder="..." />
+                <marker date="1404320995000" expanded="true" signature="8324:8343" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -51,8 +61,8 @@
       <file leaf-file-name="dismiss_index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="135">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.625" vertical-offset="0" max-vertical-offset="135">
+              <caret line="1" column="35" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -133,9 +143,9 @@
         <option value="$PROJECT_DIR$/client/views/dismiss/page_1.html" />
         <option value="$PROJECT_DIR$/client/views/dismiss/section2.html" />
         <option value="$PROJECT_DIR$/client/views/dismiss/section1.html" />
-        <option value="$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.html" />
         <option value="$PROJECT_DIR$/client/views/dismiss/section3a.html" />
         <option value="$PROJECT_DIR$/client/views/dismiss/section3.html" />
+        <option value="$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.html" />
         <option value="$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.js" />
       </list>
     </option>
@@ -472,9 +482,19 @@
           <caret line="35" column="79" selection-start-line="35" selection-start-column="79" selection-end-line="35" selection-end-column="79" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1404228313000" expanded="true" signature="6215:6231" placeholder="..." />
-            <marker date="1404228313000" expanded="true" signature="6374:6393" placeholder="..." />
-            <marker date="1404228313000" expanded="true" signature="6499:6518" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="4721:4733" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="4789:4809" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5365:5385" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5658:5713" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5838:5872" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5903:5939" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6110:6125" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6435:6471" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6553:6572" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6673:6692" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="8034:8050" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="8197:8216" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="8324:8343" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -543,14 +563,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="135">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/views/dismiss/section2.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="585">
@@ -583,15 +595,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625" vertical-offset="0" max-vertical-offset="135">
+          <caret line="1" column="35" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/views/dismiss/dismiss_index/dismiss_index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4903475" vertical-offset="1990" max-vertical-offset="3885">
-          <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.36293435" vertical-offset="1990" max-vertical-offset="4515">
+          <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1404228313000" expanded="true" signature="6215:6231" placeholder="..." />
-            <marker date="1404228313000" expanded="true" signature="6374:6393" placeholder="..." />
-            <marker date="1404228313000" expanded="true" signature="6499:6518" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="4721:4733" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="4789:4809" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5365:5385" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5658:5713" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5838:5872" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="5903:5939" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6110:6125" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6435:6471" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6553:6572" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="6673:6692" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="8034:8050" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="8197:8216" placeholder="..." />
+            <marker date="1404320995000" expanded="true" signature="8324:8343" placeholder="..." />
           </folding>
         </state>
       </provider>

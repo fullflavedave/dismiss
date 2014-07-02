@@ -107,15 +107,15 @@ function displayHTML(pageId) {
         history.push(pageId);
     }
     var htmlText =
-            ' <h2>' + pages[pageId]['title'] + '</h2>' +
-            '<form class="form-horizontal" role="form">' +
+            '<div id="dismissal-wiz" style="width: 600px">' +
+            ' <h2 id="dismissal-wiz-title" style="margin-bottom: 20px;">' + pages[pageId]['title'] + '</h2>' +
             createPageText(pages[pageId]['text']) +
             createQAHTML(pages[pageId]['questions']) +
             createFormButtonsHTML(pageId) +
-            '</form>';
+            '</div>';
 
 //    $('#wizard-text').html(htmlText);
-    document.getElementById('wizard-text').innerHTML = htmlText;
+    document.getElementById('dismissal-wiz-viewport').innerHTML = htmlText;
 }
 
 function createPageText(text) {
@@ -123,46 +123,88 @@ function createPageText(text) {
 }
 
 function createQAHTML(questions) {
-    var htmlString = '';
+    var htmlString = '<div id="dismissal-wiz-qa-section"">';
     for (var qId in questions) {
+        htmlString += '<div style="margin-bottom: 15px;">';
         htmlString += createQuestionHTML(questions[qId]);
         htmlString += createAnswerInputHTML(qId);
+        htmlString += '</div>';
     }
+    htmlString += '</div>';
     return htmlString;
 }
 
 function createQuestionHTML(questionText) {
-    return '<div class="form-group"><label class="col-sm-2 control-label">' + questionText + '</label>';
+    return '<div style="display: table-cell; width: 450px; padding-right: 20px;">' + questionText + '</div>';
 }
 
 function createAnswerInputHTML(questionId) {
     var htmlString =
-            '<div class="col-sm-10"><div class="radio-inline">' +
-            '<label><input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="true" checked> Yes </label>' +
+            '<div style="display: table-cell; width: 110px;">' +
+            '<div style="display: inline; margin-right: 10px;">' +
+            '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="true" /> Yes' +
             '</div>' +
-            '<div class="radio-inline"><label><input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="false"> No </label>' +
-            '</div></div></div>';
+            '<div style="display: inline">' +
+            '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="false" /> No' +
+            '</div>' +
+            '</div>';
     return htmlString;
 }
 
-// Send in null to sectionID for no submit button in case of wizard end node
 function createFormButtonsHTML(sectionId) {
     var htmlString =
-            '<div class="form-group" style="margin-top:20px;">'
-            + '<div class="col-sm-offset-2 col-sm-10">';
-    htmlString += '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>';
-    htmlString += '<button id="start-over" type="submit" class="btn btn-default" style="margin-right: 10px;">Start Over</button>';
+            '<div id="dismissal-wiz-buttons" style="margin-top: 30px; text-align: center">' +
+            '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>' +
+            '<button id="start-over" type="submit" class="btn btn-default" style="margin-right: 10px;">Start Over</button>';
     if (sectionId) {
         htmlString += '<button id="wizard-submit" type="submit" class="btn btn-primary">Submit</button>';
     }
-    htmlString +=
-            '</div>'
-            + '</div>';
-
+    htmlString += '</div>';
     return htmlString;
 }
 
+//function createQAHTML(questions) {
+//    var htmlString = '';
+//    for (var qId in questions) {
+//        htmlString += createQuestionHTML(questions[qId]);
+//        htmlString += createAnswerInputHTML(qId);
+//    }
+//    return htmlString;
+//}
+//
+//function createQuestionHTML(questionText) {
+//    return '<div class="form-group"><label class="col-sm-2 control-label">' + questionText + '</label>';
+//}
+//
+//function createAnswerInputHTML(questionId) {
+//    var htmlString =
+//            '<div class="col-sm-10"><div class="radio-inline">' +
+//            '<label><input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="true" checked> Yes </label>' +
+//            '</div>' +
+//            '<div class="radio-inline"><label><input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="false"> No </label>' +
+//            '</div></div></div>';
+//    return htmlString;
+//}
+
+// Send in null to sectionID for no submit button in case of wizard end node
+//function createFormButtonsHTML(sectionId) {
+//    var htmlString =
+//            '<div class="form-group" style="margin-top:20px;">'
+//            + '<div class="col-sm-offset-2 col-sm-10">';
+//    htmlString += '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>';
+//    htmlString += '<button id="start-over" type="submit" class="btn btn-default" style="margin-right: 10px;">Start Over</button>';
+//    if (sectionId) {
+//        htmlString += '<button id="wizard-submit" type="submit" class="btn btn-primary">Submit</button>';
+//    }
+//    htmlString +=
+//            '</div>'
+//            + '</div>';
+//
+//    return htmlString;
+//}
+
 function handleWizardSubmit(e) {
+    console.log('calling handleWizardSubmit()');
     e.preventDefault();
     var result = '';
     var currentPage = history[history.length-1];
