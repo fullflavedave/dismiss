@@ -11,7 +11,7 @@ var pages = {
             q0: 'Did you receive a prison sentence for your conviction?',
             q1: 'Were you convicted of a serious sex offense (Cal. Penal Code sections 586, 288, 288a, 288.5, 289, or 261.5) OR failing to obey a police officer (Vehicle Code section 42001)?',
             q2: 'Are you currently facing charges?',
-            q3: 'Are you currently on probation or parole?',
+            q3: 'Are you currently on probation or parole?'
 
         },
         yesPage: 'rehabCert',
@@ -102,19 +102,19 @@ var pages = {
 };
 
 function displayHTML(pageId) {
+    removeMessages();
     console.log('Displaying pageId = ' + pageId);
     if (history[history.length-1] !== pageId) { // for case of going backwards
         history.push(pageId);
     }
     var htmlText =
             '<div id="dismissal-wiz" style="width: 600px">' +
-            ' <h2 id="dismissal-wiz-title" style="margin-bottom: 20px;">' + pages[pageId]['title'] + '</h2>' +
+            '<h2 id="dismissal-wiz-title" style="margin-bottom: 20px;">' + pages[pageId]['title'] + '</h2>' +
             createPageText(pages[pageId]['text']) +
             createQAHTML(pages[pageId]['questions']) +
             createFormButtonsHTML(pageId) +
             '</div>';
 
-//    $('#wizard-text').html(htmlText);
     document.getElementById('dismissal-wiz-viewport').innerHTML = htmlText;
 }
 
@@ -163,77 +163,85 @@ function createFormButtonsHTML(sectionId) {
     return htmlString;
 }
 
-//function createQAHTML(questions) {
-//    var htmlString = '';
-//    for (var qId in questions) {
-//        htmlString += createQuestionHTML(questions[qId]);
-//        htmlString += createAnswerInputHTML(qId);
-//    }
-//    return htmlString;
-//}
-//
-//function createQuestionHTML(questionText) {
-//    return '<div class="form-group"><label class="col-sm-2 control-label">' + questionText + '</label>';
-//}
-//
-//function createAnswerInputHTML(questionId) {
-//    var htmlString =
-//            '<div class="col-sm-10"><div class="radio-inline">' +
-//            '<label><input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="true" checked> Yes </label>' +
-//            '</div>' +
-//            '<div class="radio-inline"><label><input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="false"> No </label>' +
-//            '</div></div></div>';
-//    return htmlString;
-//}
-
-// Send in null to sectionID for no submit button in case of wizard end node
-//function createFormButtonsHTML(sectionId) {
-//    var htmlString =
-//            '<div class="form-group" style="margin-top:20px;">'
-//            + '<div class="col-sm-offset-2 col-sm-10">';
-//    htmlString += '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>';
-//    htmlString += '<button id="start-over" type="submit" class="btn btn-default" style="margin-right: 10px;">Start Over</button>';
-//    if (sectionId) {
-//        htmlString += '<button id="wizard-submit" type="submit" class="btn btn-primary">Submit</button>';
-//    }
-//    htmlString +=
-//            '</div>'
-//            + '</div>';
-//
-//    return htmlString;
-//}
-
 function handleWizardSubmit(e) {
-    console.log('calling handleWizardSubmit()');
     e.preventDefault();
+    removeMessages();
+    var errors = [];
     var result = '';
     var currentPage = history[history.length-1];
     var questions = pages[currentPage]['questions'];
-    var yesPage = pages[currentPage]['yesPage'];
-    var noPage = pages[currentPage]['noPage'];
-    for (var qId in questions) {
+    var nextPageId;
+    questionLoop: for (var qId in questions) {  // break this out into handleRadioAnswer
         var radios = document.getElementsByName(qId + '-radios');
         for (var i = 0, length = radios.length; i < length; i++) {
             if (radios[i].checked) {
                 answers.push({qId: radios[i].value});
                 if (truthy(radios[i].value)) {
                     result = true;
+                    nextPageId = pages[currentPage]['yesPage'];
+                    break questionLoop;
+                } else {
+                    nextPageId = pages[currentPage]['noPage'];
                 }
                 // only one radio can be logically checked, don't check the rest
                 break;
+            } else {
+                if (i === radios.length - 1) {
+                    errors.push("Question not answered.");
+                }
             }
         }
-//        var answer = $('[name="' + qId + '-radios"]:checked').val();
-//        answers.push({qId: answer});
-//        if (truthy(answer)) {
-//            result = true;
-//        }
     }
-    if(result) {
-        displayHTML(yesPage);
+    if (existy(errors)) {
+        displayError(errors);
     } else {
-        displayHTML(noPage);
+        displayHTML(nextPageId);
     }
+}
+
+function removeMessages() {
+    var flashMessages = document.getElementById('flash-messages');
+    if (flashMessages) {
+        flashMessages.parentNode.removeChild(flashMessages);
+    }
+}
+
+function displayError(errors) {
+    var wizardElem = document.getElementById('dismissal-wiz');
+    var messagesHTML = '<div id="flash-messages" style="color: red">';
+            for (var i=0; i < errors.length; i++) {
+            messagesHTML +=
+                '<h3>' +
+                errors[0] +
+                '</h3>';
+            }
+    messagesHTML += '</div>';
+    wizardElem.insertAdjacentHTML('afterbegin', messagesHTML);
+}
+
+function handleRadioAnswer(qId) {
+    errors = [];
+    nextPageId;
+    var radios = document.getElementsByName(qId + '-radios');
+    for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+            answers.push({qId: radios[i].value});
+            if (truthy(radios[i].value)) {
+                result = true;
+                nextPageId = pages[currentPage]['yesPage'];
+                return {break: true}
+            } else {
+                nextPageId = pages[currentPage]['noPage'];
+            }
+            // only one radio can be logically checked, don't check the rest
+            break;
+        } else {
+            if (i === radios.length - 1) {
+                errors.push("Question not answered.");
+            }
+        }
+    }
+    return {break: false, errors: errors, nextPageId: nextPageId};
 }
 
 Template.DismissIndex.events({
@@ -291,6 +299,21 @@ function truthy(a) {
     if (!a || a === 'false' || a === "0") {
         return false;
     } else {
+        return true;
+    }
+}
+
+function existy(a) {
+    if (typeof(a) === 'object') {
+        if (a.length === 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function empty(a) {
+    if (a === null || a === '') {
         return true;
     }
 }
