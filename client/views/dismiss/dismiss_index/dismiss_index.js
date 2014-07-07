@@ -154,8 +154,7 @@ function createAnswerInputHTML(questionId) {
     } else {
         htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="yes" /> Yes';
     }
-    htmlString += '</div>' +
-            '<div style="display: inline">';
+    htmlString += '</div><div style="display: inline">';
     if (answers[questionId] === 'no') {
         htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="no" checked /> No';
     } else {
