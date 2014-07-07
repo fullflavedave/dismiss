@@ -2,7 +2,7 @@
 /* DismissIndex: Event Handlers and Helpers */
 /*****************************************************************************/
 
-var answers = [];
+var answers = {};
 var history = [];
 var pages = {
     p1: {
@@ -14,13 +14,15 @@ var pages = {
             q3: 'Are you currently on probation or parole?'
 
         },
+        firstPage: true,
         yesPage: 'rehabCert',
         noPage: 'p2'
     },
     rehabCert: {
         title: 'Ineligible',
         text:  'You are ineligible for a dismissal. However, you MAY BE ELIGIBLE for a Certificate of Rehabilitation.' +
-               '[See chart to check for eligibility for a Certificate of Rehabilitation]'
+               '[See chart to check for eligibility for a Certificate of Rehabilitation]',
+        endPage: true
     },
     p2: {
         title: 'II. Misdemeanor or Infraction',
@@ -56,12 +58,14 @@ var pages = {
     },
     eligible12034a: {
         title: 'Eligible',
-        text: 'YOU ARE ELIGIBLE for a mandatory 1203.4a dismissal. Fill out form CR-180 to begin the filing process for your petition. [link to form CR-180.]'
+        text: 'YOU ARE ELIGIBLE for a mandatory 1203.4a dismissal. <a href="http://www.courts.ca.gov/documents/cr180.pdf" target="_blank">Fill out form CR-180 to begin the filing process for your petition.</a>',
+        endPage: true
     },
     mayQualify12034: {
         title: 'Discretionary Dismissal',
-        text: 'YOU MAY QUALIFY for a discretionary 1203.4 dismissal. Fill out form CR-180 to begin the filing process for your petition. [link to form CR-180.] ' +
-              'or consider waiting out the one year period for a mandatory dismissal.'
+        text: 'YOU MAY QUALIFY for a discretionary 1203.4 dismissal. <a href="http://www.courts.ca.gov/documents/cr180.pdf" target="_blank">Fill out form CR-180 to begin the filing process for your petition.</a>' +
+              'or consider waiting out the one year period for a mandatory dismissal.',
+        endPage: true
     },
     p4: {
         title: 'IV. Probation Violation',
@@ -73,31 +77,34 @@ var pages = {
     },
     p4a: {
         title: '1203.4 Dismissal',
-        text: 'YOU MAY QUALIFY for a discretionary 1203.4 dismissal. Fill out form CR-180 to begin the filing process for your petition. [link to form CR-180.]' +
-            'If you were convicted of a felony, go on to <a href="#" id="linkTo5">question V</a> to see if you are eligible for a 17(b) felony reduction.'
+        text: 'YOU MAY QUALIFY for a discretionary 1203.4 dismissal. <a href="http://www.courts.ca.gov/documents/cr180.pdf" target="_blank">Fill out form CR-180 to begin the filing process for your petition.</a>' +
+            'If you were convicted of a felony, go on to <a href="#" id="linkTo5">question V</a> to see if you are eligible for a 17(b) felony reduction.',
+        endPage: true
     },
     seemsWrong: {
         title: '1203.4 Dismissal',
-        text: 'YOU MAY QUALIFY for a discretionary 1203.4 dismissal. Fill out form CR-180 to begin the filing process for your petition. [link to form CR-180.]' +
-                'If you were convicted of a felony, go on to <a href="#" id="linkTo5">question V</a> to see if you are eligible for a 17(b) felony reduction.'
+        text: 'YOU MAY QUALIFY for a discretionary 1203.4 dismissal. <a href="http://www.courts.ca.gov/documents/cr180.pdf" target="_blank">Fill out form CR-180 to begin the filing process for your petition.</a>' +
+                'If you were convicted of a felony, go on to <a href="#" id="linkTo5">question V</a> to see if you are eligible for a 17(b) felony reduction.',
+        endPage: true
+    },
+    wobblerYes: {
+        title: '17(b) Felony Reduction',
+        text: 'If you were convicted of a felony under a wobbler statute, you may be eligible for a 17(b) felony reduction. ' +
+              'You can ask for a 17(b) reduction in your 1203.4 dismissal petition. <a href="http://www.courts.ca.gov/documents/cr180.pdf" target="_blank">Fill out form CR-180 to begin the filing process for your petition.</a>',
+        endPage: true
+    },
+    wobblerNo: {
+        title: '1203.4 Dismissal',
+        text: 'You may still petition for a 1203.4 dismissal. <a href="http://www.courts.ca.gov/documents/cr180.pdf" target="_blank">Fill out form CR-180 to begin the filing process for your petition.</a>',
+        endPage: true
     },
     p5: {
-      title: 'V. Felony Wobbler',
+        title: 'V. Felony Wobbler',
         questions: {
             q9: 'Were you convicted of a felony wobbler? [A wobbler conviction is a conviction that is punishable as a felony OR a misdemeanor.]'
         },
         yesPage: 'wobblerYes',
         noPage: 'wobblerNo'
-    },
-    wobblerYes: {
-        title: '17(b) Felony Reduction',
-        text: 'If you were convicted of a felony under a wobbler statute, you may be eligible for a 17(b) felony reduction. ' +
-              'You can ask for a 17(b) reduction in your 1203.4 dismissal petition. Fill out form CR-180 to begin the filing process for your petition. ' +
-              '[link to form CR-180.]'
-    },
-    wobblerNo: {
-        title: '1203.4 Dismissal',
-        text: 'You may still petition for a 1203.4 dismissal. Fill out form CR-180 to begin the filing process for your petition. [link to form CR-180.]'
     }
 };
 
@@ -141,22 +148,30 @@ function createQuestionHTML(questionText) {
 function createAnswerInputHTML(questionId) {
     var htmlString =
             '<div style="display: table-cell; width: 110px;">' +
-            '<div style="display: inline; margin-right: 10px;">' +
-            '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="true" /> Yes' +
-            '</div>' +
-            '<div style="display: inline">' +
-            '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="false" /> No' +
-            '</div>' +
-            '</div>';
+            '<div style="display: inline; margin-right: 10px;">';
+    if (answers[questionId] === 'yes') {
+        htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="yes" checked /> Yes';
+    } else {
+        htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="yes" /> Yes';
+    }
+    htmlString += '</div>' +
+            '<div style="display: inline">';
+    if (answers[questionId] === 'no') {
+        htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="no" checked /> No';
+    } else {
+        htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-no" value="no" /> No';
+    }
+    htmlString += '</div></div>';
     return htmlString;
 }
 
-function createFormButtonsHTML(sectionId) {
-    var htmlString =
-            '<div id="dismissal-wiz-buttons" style="margin-top: 30px; text-align: center">' +
-            '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>' +
-            '<button id="start-over" type="submit" class="btn btn-default" style="margin-right: 10px;">Start Over</button>';
-    if (sectionId) {
+function createFormButtonsHTML(pageId) {
+    var htmlString = '<div id="dismissal-wiz-buttons" style="margin-top: 30px; text-align: center">';
+    if (!truthy(pages[pageId]['firstPage'])) {
+        htmlString += '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>';
+    }
+    htmlString += '<button id="start-over" type="submit" class="btn btn-default" style="margin-right: 10px;">Start Over</button>';
+    if (!pages[pageId]['endPage']) {
         htmlString += '<button id="wizard-submit" type="submit" class="btn btn-primary">Submit</button>';
     }
     htmlString += '</div>';
@@ -175,16 +190,8 @@ function handleWizardSubmit(e) {
         var radios = document.getElementsByName(qId + '-radios');
         for (var i = 0, length = radios.length; i < length; i++) {
             if (radios[i].checked) {
-                answers.push({qId: radios[i].value});
-                if (truthy(radios[i].value)) {
-                    result = true;
-                    nextPageId = pages[currentPage]['yesPage'];
-                    break questionLoop;
-                } else {
-                    nextPageId = pages[currentPage]['noPage'];
-                }
-                // only one radio can be logically checked, don't check the rest
-                break;
+                answers[qId] = radios[i].value;
+                break;                 // only one radio can be logically checked, don't check the rest
             } else {
                 if (i === radios.length - 1) {
                     errors.push("Question not answered.");
@@ -194,9 +201,18 @@ function handleWizardSubmit(e) {
     }
     if (existy(errors)) {
         displayError(errors);
-    } else {
-        displayHTML(nextPageId);
+        return;
     }
+    nextPageId = pages[currentPage]['noPage'];
+    for (var qId in questions) {
+        if (answers[qId] === 'yes') {
+            nextPageId = pages[currentPage]['yesPage'];
+            break;
+        } else if (answers[qId] !== 'no') {
+            console.log('Question ' + qId + ' had no recorded error.');
+        }
+    }
+    displayHTML(nextPageId);
 }
 
 function removeMessages() {
@@ -296,7 +312,7 @@ Template.DismissIndex.destroyed = function () {
 };
 
 function truthy(a) {
-    if (!a || a === 'false' || a === "0") {
+    if (!existy(a) || a === 'false' || a === "0") {
         return false;
     } else {
         return true;
@@ -309,7 +325,7 @@ function existy(a) {
             return false;
         }
     }
-    return true;
+    return (a != null && a != '');
 }
 
 function empty(a) {
