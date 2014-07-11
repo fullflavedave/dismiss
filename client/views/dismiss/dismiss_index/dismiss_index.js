@@ -2,9 +2,25 @@
 /* DismissIndex: Event Handlers and Helpers */
 /*****************************************************************************/
 
+var validationTypes = ['allAnswersRequired'];
+var validationFunctions = {
+    required: function(answer, message) {
+        return !answer ? message : '';
+    }
+}
+
+
 var answers = {};
 var history = [];
 var pages = {
+    globalConfig: {
+        validations: [
+            {
+                name: 'required',
+                message: 'Question not answered'
+            }
+        ]
+    },
     p1: {
         title: 'I. Baseline Eligibility',
         questions: {
@@ -109,8 +125,8 @@ var pages = {
 };
 
 function displayHTML(pageId) {
-    removeMessages();
     console.log('Displaying pageId = ' + pageId);
+
     if (history[history.length-1] !== pageId) { // for case of going backwards
         history.push(pageId);
     }
@@ -123,6 +139,7 @@ function displayHTML(pageId) {
             '</div>';
 
     document.getElementById('dismissal-wiz-viewport').innerHTML = htmlText;
+    clearErrorDisplay();
 }
 
 function createPageText(text) {
@@ -132,8 +149,8 @@ function createPageText(text) {
 function createQAHTML(questions) {
     var htmlString = '<div id="dismissal-wiz-qa-section"">';
     for (var qId in questions) {
-        htmlString += '<div style="margin-bottom: 15px;">';
-        htmlString += createQuestionHTML(questions[qId]);
+        htmlString += '<div style="margin-bottom: 15px;" id="' + qId + '-question-answer-section">';
+        htmlString += createQuestionHTML(qId, questions[qId]);
         htmlString += createAnswerInputHTML(qId);
         htmlString += '</div>';
     }
@@ -141,13 +158,13 @@ function createQAHTML(questions) {
     return htmlString;
 }
 
-function createQuestionHTML(questionText) {
-    return '<div style="display: table-cell; width: 450px; padding-right: 20px;">' + questionText + '</div>';
+function createQuestionHTML(questionId, questionText) {
+    return '<div style="display: table-cell; width: 450px; padding-right: 20px;" id="' + questionId + '-question-section">' + questionText + '</div>';
 }
 
 function createAnswerInputHTML(questionId) {
     var htmlString =
-            '<div style="display: table-cell; width: 110px;">' +
+            '<div style="display: table-cell; width: 110px;" id="' + questionId + '-answer-section">' +
             '<div style="display: inline; margin-right: 10px;">';
     if (answers[questionId] === 'yes') {
         htmlString += '<input type="radio" name="' + questionId + '-radios" id="' + questionId + '-yes" value="yes" checked /> Yes';
@@ -177,58 +194,88 @@ function createFormButtonsHTML(pageId) {
     return htmlString;
 }
 
-function handleWizardSubmit(e) {
-    e.preventDefault();
-    removeMessages();
+function validatePageAnswers(currentPage) {
     var errors = [];
-    var result = '';
-    var currentPage = history[history.length-1];
     var questions = pages[currentPage]['questions'];
-    var nextPageId;
-    questionLoop: for (var qId in questions) {  // break this out into handleRadioAnswer
-        var radios = document.getElementsByName(qId + '-radios');
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked) {
-                answers[qId] = radios[i].value;
-                break;                 // only one radio can be logically checked, don't check the rest
-            } else {
-                if (i === radios.length - 1) {
-                    errors.push("Question not answered.");
-                }
+    for (var qId in questions) {
+        for (var j=0; j < pages.globalConfig.validations.length; j++) {
+            var validationName = pages.globalConfig.validations[j].name;
+            var validationFunction = validationFunctions[validationName];
+            var errorMessage = validationFunction(answers[qId], pages.globalConfig.validations[j].message);
+            if (errorMessage) {
+                errors.push({qId: qId, message: errorMessage});
             }
         }
     }
-    if (existy(errors)) {
-        displayError(errors);
-        return;
+    console.log('errors = ' + JSON.stringify(errors));
+    return errors;
+}
+
+function handleWizardSubmit(e) {
+    e.preventDefault();
+    clearErrorDisplay();
+
+    var currentPage = history[history.length-1];
+    var questions = pages[currentPage]['questions'];
+    var nextPageId;
+
+    //** Begin break this out into handleRadioAnswer
+    questionLoop: for (var qId in questions) {
+        var radios = document.getElementsByName(qId + '-radios');
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                answers[qId] = radios[i].value;
+                break;                 // only one radio can be logically checked, don't check the rest
+            }
+        }
     }
+
     nextPageId = pages[currentPage]['noPage'];
     for (var qId in questions) {
         if (answers[qId] === 'yes') {
             nextPageId = pages[currentPage]['yesPage'];
             break;
         } else if (answers[qId] !== 'no') {
-            console.log('Question ' + qId + ' had no recorded error.');
+            console.log('Question ' + qId + ' not answered');
         }
     }
+    //** End break this out into handleRadioAnswer
+
+    var errors = validatePageAnswers(currentPage);
+    if (existy(errors)) {
+        displayErrors(errors);
+        return;
+    }
+
     displayHTML(nextPageId);
 }
 
-function removeMessages() {
+function clearErrorDisplay() {
     var flashMessages = document.getElementById('flash-messages');
     if (flashMessages) {
         flashMessages.parentNode.removeChild(flashMessages);
     }
+
+    var currentPage = history[history.length-1];
+    if (!currentPage) return;
+
+    var questions = pages[currentPage]['questions'];
+    for (var qId in questions) {
+        var answerSection = document.getElementById(qId + '-question-answer-section');
+        answerSection.className = null;
+    }
 }
 
-function displayError(errors) {
+function displayErrors(errors) {
     var wizardElem = document.getElementById('dismissal-wiz');
     var messagesHTML = '<div id="flash-messages" style="color: red">';
             for (var i=0; i < errors.length; i++) {
-            messagesHTML +=
-                '<h3>' +
-                errors[0] +
-                '</h3>';
+                messagesHTML +=
+                        '<h3>' +
+                        errors[i].qId + ': ' + errors[i].message +
+                        '</h3>';
+                var answerSection = document.getElementById(errors[i].qId + '-question-answer-section');
+                answerSection.className = 'error';
             }
     messagesHTML += '</div>';
     wizardElem.insertAdjacentHTML('afterbegin', messagesHTML);
