@@ -7,27 +7,40 @@ var validationFunctions = {
     required: function(answer, message) {
         return !answer ? message : '';
     }
-}
-
+};
 
 var answers = {};
 var history = [];
 var pages = {
+    // TODO: pull out globalConfig into it's own object
     globalConfig: {
         validations: [
             {
                 name: 'required',
-                message: 'Question not answered'
+                message: '{ordinal}  Question not answered'
             }
         ]
     },
     p1: {
         title: 'I. Baseline Eligibility',
         questions: {
-            q0: 'Did you receive a prison sentence for your conviction?',
-            q1: 'Were you convicted of a serious sex offense (Cal. Penal Code sections 586, 288, 288a, 288.5, 289, or 261.5) OR failing to obey a police officer (Vehicle Code section 42001)?',
-            q2: 'Are you currently facing charges?',
-            q3: 'Are you currently on probation or parole?'
+            q1: {
+                ordinal: '1.',
+                text: 'Did you receive a prison sentence for your conviction?',
+                validations: ['required', 'number']
+            },
+            q2: {
+                ordinal: '2.',
+                text: 'Were you convicted of a serious sex offense (Cal. Penal Code sections 586, 288, 288a, 288.5, 289, or 261.5) OR failing to obey a police officer (Vehicle Code section 42001)?'
+            },
+            q3: {
+                ordinal: '3.',
+                text: 'Are you currently facing charges?'
+            },
+            q4: {
+                ordinal: '4.',
+                text: 'Are you currently on probation or parole?'
+            }
 
         },
         firstPage: true,
@@ -43,7 +56,9 @@ var pages = {
     p2: {
         title: 'II. Misdemeanor or Infraction',
         questions: {
-            q4: 'Were you convicted of either a misdemeanor or an infraction?'
+            q5: {
+                text: 'Were you convicted of either a misdemeanor or an infraction?'
+            }
         },
         yesPage: 'p3',
         noPage: 'p4'
@@ -51,7 +66,9 @@ var pages = {
     p3: {
         title: 'III. Probation',
         questions: {
-            q5: 'If you were convicted of a misdemeanor, did you receive probation?'
+            q6: {
+                text: 'If you were convicted of a misdemeanor, did you receive probation?'
+            }
         },
         yesPage: 'p4',
         noPage: 'p3a'
@@ -59,7 +76,9 @@ var pages = {
     p3a: {
         title: 'III.a. Probation Fines and Fees',
         questions: {
-            q6: 'If you did not receive probation, did you pay off all your court fines and fees?'
+            q7: {
+                text: 'If you did not receive probation, did you pay off all your court fines and fees?'
+            }
         },
         yesPage: 'p3b',
         noPage: 'p4'
@@ -67,7 +86,9 @@ var pages = {
     p3b: {
         title: 'III.b. One Year Past',
         questions: {
-            q7: 'If you paid off all your fines and fees, has it been a year since the date of your conviction?'
+            q8: {
+                text: 'If you paid off all your fines and fees, has it been a year since the date of your conviction?'
+            }
         },
         yesPage: 'eligible12034a',
         noPage: 'mayQualify12034'
@@ -86,7 +107,9 @@ var pages = {
     p4: {
         title: 'IV. Probation Violation',
         questions: {
-            q8: 'If you were sentenced to probation for your misdemeanor OR felony conviction, did you violate the terms of your probation?'
+            q9: {
+                text: 'If you were sentenced to probation for your misdemeanor OR felony conviction, did you violate the terms of your probation?'
+            }
         },
         yesPage: 'p4a',
         noPage: 'seemsWrong'
@@ -117,52 +140,27 @@ var pages = {
     p5: {
         title: 'V. Felony Wobbler',
         questions: {
-            q9: 'Were you convicted of a felony wobbler? [A wobbler conviction is a conviction that is punishable as a felony OR a misdemeanor.]'
+            q10: {
+                text: 'Were you convicted of a felony wobbler? [A wobbler conviction is a conviction that is punishable as a felony OR a misdemeanor.]'
+            }
         },
         yesPage: 'wobblerYes',
         noPage: 'wobblerNo'
     }
 };
 
-function displayHTML(pageId) {
-    console.log('Displaying pageId = ' + pageId);
-
-    if (history[history.length-1] !== pageId) { // for case of going backwards
-        history.push(pageId);
-    }
-    var htmlText =
-            '<div id="dismissal-wiz" style="width: 600px">' +
-            '<h2 id="dismissal-wiz-title" style="margin-bottom: 20px;">' + pages[pageId]['title'] + '</h2>' +
-            createPageText(pages[pageId]['text']) +
-            createQAHTML(pages[pageId]['questions']) +
-            createFormButtonsHTML(pageId) +
-            '</div>';
-
-    document.getElementById('dismissal-wiz-viewport').innerHTML = htmlText;
-    clearErrorDisplay();
-}
-
-function createPageText(text) {
+var createPageText = function(text) {
     return text || '';
-}
+};
 
-function createQAHTML(questions) {
-    var htmlString = '<div id="dismissal-wiz-qa-section"">';
-    for (var qId in questions) {
-        htmlString += '<div style="margin-bottom: 15px;" id="' + qId + '-question-answer-section">';
-        htmlString += createQuestionHTML(qId, questions[qId]);
-        htmlString += createAnswerInputHTML(qId);
-        htmlString += '</div>';
-    }
-    htmlString += '</div>';
-    return htmlString;
-}
+var createQuestionHTML = function(qId, qOrdinal, qText) {
+    qOrdinal = qOrdinal || '';
+    return '<div style="display: table-cell; width: 450px; padding-right: 20px;" id="' + qId + '-question-section">'
+            + qOrdinal + ' ' + qText +
+            '</div>';
+};
 
-function createQuestionHTML(questionId, questionText) {
-    return '<div style="display: table-cell; width: 450px; padding-right: 20px;" id="' + questionId + '-question-section">' + questionText + '</div>';
-}
-
-function createAnswerInputHTML(questionId) {
+var createAnswerInputHTML = function(questionId) {
     var htmlString =
             '<div style="display: table-cell; width: 110px;" id="' + questionId + '-answer-section">' +
             '<div style="display: inline; margin-right: 10px;">';
@@ -179,9 +177,21 @@ function createAnswerInputHTML(questionId) {
     }
     htmlString += '</div></div>';
     return htmlString;
-}
+};
 
-function createFormButtonsHTML(pageId) {
+var createQAHTML = function(questions) {
+    var htmlString = '<div id="dismissal-wiz-qa-section"">';
+    for (var qId in questions) {
+        htmlString += '<div style="margin-bottom: 15px;" id="' + qId + '-question-answer-section">';
+        htmlString += createQuestionHTML(qId, questions[qId]['ordinal'], questions[qId]['text']);
+        htmlString += createAnswerInputHTML(qId);
+        htmlString += '</div>';
+    }
+    htmlString += '</div>';
+    return htmlString;
+};
+
+var createFormButtonsHTML = function(pageId) {
     var htmlString = '<div id="dismissal-wiz-buttons" style="margin-top: 30px; text-align: center">';
     if (!truthy(pages[pageId]['firstPage'])) {
         htmlString += '<button id="back" type="submit" class="btn btn-default" style="margin-right: 10px;">Back</button>';
@@ -194,7 +204,30 @@ function createFormButtonsHTML(pageId) {
     return htmlString;
 }
 
-function validatePageAnswers(currentPage) {
+var currentPageId = function() {
+    return history[history.length-1];
+};
+
+var displayHTML = function(pageId) {
+    console.log('Displaying pageId = ' + pageId);
+
+    if (currentPageId() !== pageId) { // for case of going backwards
+        history.push(pageId);
+    }
+    var htmlText =
+            '<div id="dismissal-wiz" style="width: 600px">' +
+            '<h2 id="dismissal-wiz-title" style="margin-bottom: 20px;">' + pages[pageId]['title'] + '</h2>' +
+            createPageText(pages[pageId]['text']) +
+            createQAHTML(pages[pageId]['questions']) +
+            createFormButtonsHTML(pageId) +
+            '</div>';
+
+    document.getElementById('dismissal-wiz-viewport').innerHTML = htmlText;
+    clearErrorDisplay();
+};
+
+
+var validatePageAnswers = function(currentPage) {
     var errors = [];
     var questions = pages[currentPage]['questions'];
     for (var qId in questions) {
@@ -209,9 +242,78 @@ function validatePageAnswers(currentPage) {
     }
     console.log('errors = ' + JSON.stringify(errors));
     return errors;
-}
+};
 
-function handleWizardSubmit(e) {
+var clearErrorDisplay = function() {
+    var flashMessages = document.getElementById('flash-messages');
+    if (flashMessages) {
+        flashMessages.parentNode.removeChild(flashMessages);
+    }
+
+    var currentPage = history[history.length-1];
+    if (!currentPage) return;
+
+    var questions = pages[currentPage]['questions'];
+    for (var qId in questions) {
+        var answerSection = document.getElementById(qId + '-question-answer-section');
+        answerSection.className = null;
+    }
+};
+
+var replaceOneToken = function(message, tokenRegEx, replacement) {
+    replacement = replacement || '';
+    return message.replace(tokenRegEx, replacement);
+};
+
+// Todo: make more robust to handle tokens not expected and tokens whose replacement value is not found
+var replaceTokens = function(message, qId) {
+    var currentQ = pages[currentPageId()]['questions'][qId];
+
+    message = replaceOneToken(message, /{ordinal}/g, currentQ['ordinal']);
+
+    return message;
+};
+
+var displayErrors = function(errors) {
+    var wizardElem = document.getElementById('dismissal-wiz');
+    var messagesHTML = '<div id="flash-messages" style="color: red">';
+    for (var i=0; i < errors.length; i++) {
+        var message = replaceTokens(errors[i].message, errors[i].qId);
+        messagesHTML +=
+                '<h3>' + message + '</h3>';
+        var answerSection = document.getElementById(errors[i].qId + '-question-answer-section');
+        answerSection.className = 'error';
+    }
+    messagesHTML += '</div>';
+    wizardElem.insertAdjacentHTML('afterbegin', messagesHTML);
+};
+
+var handleRadioAnswer = function(qId) {
+    errors = [];
+    nextPageId;
+    var radios = document.getElementsByName(qId + '-radios');
+    for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+            answers.push({qId: radios[i].value});
+            if (truthy(radios[i].value)) {
+                result = true;
+                nextPageId = pages[currentPage]['yesPage'];
+                return {break: true}
+            } else {
+                nextPageId = pages[currentPage]['noPage'];
+            }
+            // only one radio can be logically checked, don't check the rest
+            break;
+        } else {
+            if (i === radios.length - 1) {
+                errors.push("Question not answered.");
+            }
+        }
+    }
+    return {break: false, errors: errors, nextPageId: nextPageId};
+};
+
+var handleWizardSubmit = function(e) {
     e.preventDefault();
     clearErrorDisplay();
 
@@ -248,63 +350,7 @@ function handleWizardSubmit(e) {
     }
 
     displayHTML(nextPageId);
-}
-
-function clearErrorDisplay() {
-    var flashMessages = document.getElementById('flash-messages');
-    if (flashMessages) {
-        flashMessages.parentNode.removeChild(flashMessages);
-    }
-
-    var currentPage = history[history.length-1];
-    if (!currentPage) return;
-
-    var questions = pages[currentPage]['questions'];
-    for (var qId in questions) {
-        var answerSection = document.getElementById(qId + '-question-answer-section');
-        answerSection.className = null;
-    }
-}
-
-function displayErrors(errors) {
-    var wizardElem = document.getElementById('dismissal-wiz');
-    var messagesHTML = '<div id="flash-messages" style="color: red">';
-            for (var i=0; i < errors.length; i++) {
-                messagesHTML +=
-                        '<h3>' +
-                        errors[i].qId + ': ' + errors[i].message +
-                        '</h3>';
-                var answerSection = document.getElementById(errors[i].qId + '-question-answer-section');
-                answerSection.className = 'error';
-            }
-    messagesHTML += '</div>';
-    wizardElem.insertAdjacentHTML('afterbegin', messagesHTML);
-}
-
-function handleRadioAnswer(qId) {
-    errors = [];
-    nextPageId;
-    var radios = document.getElementsByName(qId + '-radios');
-    for (var i = 0, length = radios.length; i < length; i++) {
-        if (radios[i].checked) {
-            answers.push({qId: radios[i].value});
-            if (truthy(radios[i].value)) {
-                result = true;
-                nextPageId = pages[currentPage]['yesPage'];
-                return {break: true}
-            } else {
-                nextPageId = pages[currentPage]['noPage'];
-            }
-            // only one radio can be logically checked, don't check the rest
-            break;
-        } else {
-            if (i === radios.length - 1) {
-                errors.push("Question not answered.");
-            }
-        }
-    }
-    return {break: false, errors: errors, nextPageId: nextPageId};
-}
+};
 
 Template.DismissIndex.events({
   /*
